@@ -1,0 +1,29 @@
+.side-menu{
+    --padding-start: 10px; /* Espaço interno na esquerda */
+    --padding-end: 10px;   /* Espaço interno na direita */
+    --min-height: 40px;    /* Altura mínima dos botões */
+    --background: #f0f0f0; /* Cor de fundo */
+    font-size: 14px;       /* Tamanho da fonte */
+    margin-bottom: 10px;   /* Espaçamento entre os botões */
+    border-radius: 0px;    /* Deixa o botão retangular */
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+}
+
+
+.ion-item-divider {
+    background-color: #ccc;
+    height: 2px;
+  }
+
+
+  .sub-menu{
+    margin-left: 5%;
+  }
+
+
+.ion-app{
+    background-color: white;
+    
+}

@@ -1,3 +1,79 @@
 <ion-app>
-  <ion-router-outlet></ion-router-outlet>
+  <ion-menu contentId="main-content">
+    <ion-header [translucent]="true">
+      <ion-toolbar>
+        <ion-title>ProjetoEstoque</ion-title>
+      </ion-toolbar>
+    </ion-header>
+
+    <ion-content>
+      <ion-list>
+        <ion-item button="">
+          <ion-label>
+            <ion-icon slot="start" name="home-outline"></ion-icon>
+            Inicio</ion-label>
+        </ion-item>
+
+        <ion-item button="">
+          <ion-label>
+            <ion-icon slot="start" name="person-outline"></ion-icon>
+            Listas</ion-label>
+        </ion-item>
+
+        <ion-item button (click)="alterarSubMenu()" >
+          <ion-label>
+            <ion-icon slot="start" name="settings-outline"></ion-icon>
+            Estoque
+          </ion-label>
+          <ion-icon slot="end" [name]="subMenuOpen ? 'chevron-up-outline' : 'chevron-down-outline'"></ion-icon>
+        </ion-item>
+        
+        <ion-list *ngIf="subMenuOpen" class="sub-menu">
+          <ion-item button>
+            <ion-label>
+              <ion-icon slot="start" name="document-outline"></ion-icon>
+              Adicionar produtos
+            </ion-label>
+          </ion-item>
+
+          <ion-item button>
+            <ion-label>
+              <ion-icon slot="start" name="document-outline"></ion-icon>
+              Ver produtos do estoque
+            </ion-label>
+          </ion-item>
+
+          <ion-item button>
+            <ion-label>
+              <ion-icon slot="start" name="document-outline"></ion-icon>
+              Criar estoque
+            </ion-label>
+          </ion-item>
+
+        </ion-list>
+
+        <ion-item button>
+          <ion-label>
+            <ion-icon slot="start" name="settings-outline"></ion-icon>
+            Estoque</ion-label>
+        </ion-item>
+
+        <ion-item button="">
+          <ion-label>
+            <ion-icon slot="start" name="settings-outline"></ion-icon>
+            Relatorio</ion-label>
+        </ion-item>
+
+        <ion-item button="">
+          <ion-label>
+            <ion-icon slot="start" name="settings-outline"></ion-icon>
+            Configurações</ion-label>
+        </ion-item>
+
+
+      </ion-list>
+    </ion-content>
+  </ion-menu>
+ 
+  <ion-router-outlet id ="main-content"></ion-router-outlet>
 </ion-app>

@@ -1,0 +1,51 @@
+<ion-app>
+
+
+  <ion-header [translucent]="true">
+    <ion-toolbar>
+      <ion-buttons slot="start">
+        <ion-menu-button></ion-menu-button>
+      </ion-buttons>
+      <ion-title>Cadastro de Usuarios</ion-title>
+    </ion-toolbar>
+  </ion-header>
+  <ion-content class="ion-padding">
+
+    <div class="background" id="background">
+      <div class="formulario" id="formulario">
+        <form [formGroup]="registrationForm" (ngSubmit)="onSubmit()">
+          <ion-item>
+            <ion-input label="login" labelPlacement="floating" placeholder="Insira o seu usuário" formControlName="login"></ion-input>
+          </ion-item>
+          <ion-text color="danger" *ngIf="registrationForm.get('login')?.touched && registrationForm.get('login')?.invalid">
+            login é obrigatório.
+          </ion-text>
+
+          <ion-item>
+            <ion-input label="e-mail" labelPlacement="floating" placeholder="Insira o seu e-mail" type = "email" formControlName="email"></ion-input>
+          </ion-item>
+          <ion-text color="danger" *ngIf="registrationForm.get('email')?.touched && registrationForm.get('email')?.invalid">
+            Insira um email válido.
+          </ion-text>
+
+
+          <ion-item>
+            <ion-input label="senha" labelPlacement="floating" placeholder="Insira a sua senha" type="password" formControlName="senha"></ion-input>
+          </ion-item>
+            <ion-text color="danger" *ngIf="registrationForm.get('senha')?.touched && registrationForm.get('senha')?.invalid">
+          </ion-text>
+
+          <ion-item>
+            <ion-input label="nome" labelPlacement="floating" placeholder="Insira o seu nome" type="text" formControlName="nome"></ion-input>
+          </ion-item>
+            <ion-text color="danger" *ngIf="registrationForm.get('nome')?.touched && registrationForm.get('nome')?.invalid">
+          </ion-text>
+          
+          
+
+        <ion-button expand="block" type="submit" [disabled]="registrationForm.invalid">Cadastrar</ion-button>
+      </form>
+      </div>
+    </div>
+  </ion-content>
+</ion-app>
