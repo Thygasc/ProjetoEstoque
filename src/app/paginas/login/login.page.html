@@ -1,0 +1,28 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>login</ion-title>
+    <ion-buttons slot="start">
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+<div class="backgroud" id="backgroud">
+  <div class="loginForm" id="loginForm">
+    <form [formGroup]="loginForms" (ngSubmit)="onSubmit()">
+      <ion-item>
+        <ion-input label="login" labelPlacement="floating" placeholder="Insira o seu usuário" formControlName="login"></ion-input>
+      </ion-item>
+      <ion-text color="danger" *ngIf="loginForms.get('login')?.touched && loginForms.get('login')?.invalid">
+        login é obrigatório.
+      </ion-text>
+      <ion-item>
+        <ion-input required formControlName="senha" type="password"></ion-input>
+      </ion-item>
+      <ion-button block color="primary" type="submit" [disabled]="loginForms.invalid">
+        Login
+      </ion-button>
+    </form>
+  </div>
+</div>
+</ion-content>

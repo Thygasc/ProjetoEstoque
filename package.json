@@ -31,6 +31,8 @@
     "cors": "^2.8.5",
     "express": "^4.21.1",
     "ionicons": "^7.0.0",
+    "jsonwebtoken": "^9.0.2",
+    "jwt-decode": "^4.0.0",
     "mysql2": "^3.11.3",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",

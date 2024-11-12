@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { ApiService } from 'src/app/api.service';
+import { ApiService } from 'src/app/services/api.service';
 
 @Component({
   selector: 'app-cadastro-usuarios',
@@ -21,6 +21,17 @@ export class CadastroUsuariosPage implements OnInit {
 
   onSubmit(){
     if (this.registrationForm.valid){
+
+      const login = this.registrationForm.get('login')?.value;
+   
+      this.apiService.validaUsuario(login).subscribe(
+        (response) =>{
+          console.log('resposta da api:',response);
+        },
+        (error) =>{
+          console.error('erro ao consultar o usuario:',error);
+        });
+
       this.apiService.registerUser(this.registrationForm.value).subscribe(
         (response) =>{
           console.log("Usuário cadastrado com Sucesso:",response);
@@ -28,7 +39,7 @@ export class CadastroUsuariosPage implements OnInit {
         (error) =>{
           console.error("Erro ao cadastrar usuario:",error);
         }
-      )
+      );
     } else {
       console.log('formuilario invalido');
     };
