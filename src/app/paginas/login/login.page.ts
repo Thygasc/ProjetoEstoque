@@ -12,22 +12,22 @@ export class LoginPage implements OnInit {
 
   constructor(private formBuilder:FormBuilder,private apiService:ApiService) {
     this.loginForms=this.formBuilder.group([
-      login:['',[Validators.required]],
-      senha: ['',[Validators.required]],
+      // login:['',[Validators.required]],
+      // senha: ['',[Validators.required]],
     ]);
    }
 
    onSubmit(){
-    if(this.loginForms.valid){
-      const login = this.loginForms.get('login')?.value;
-      const senha = this.loginForms.get('senha')?.value;
+    // if(this.loginForms.valid){
+    //   const login = this.loginForms.get('login')?.value;
+    //   const senha = this.loginForms.get('senha')?.value;
 
-      this.apiService.validaUsuario(login,senha).subscribe(
-        (response) =>{
-          console.log("")
-        }
-      )
-    }
+    //   this.apiService.validaUsuario(login,senha).subscribe(
+    //     (response) =>{
+    //       console.log("")
+    //     }
+    //   )
+    // }
    }
 
   ngOnInit() {
