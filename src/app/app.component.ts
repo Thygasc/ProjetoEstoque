@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-root',
@@ -11,6 +12,12 @@ export class AppComponent {
 
   alterarSubMenu(){
     this.subMenuOpen = !this.subMenuOpen;
+
 }
-  constructor() {}
+  constructor(private router:Router) {}
+  
+  GoHome(){
+    this.router.navigate(['/home']);
+  }
+
 }

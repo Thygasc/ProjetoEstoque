@@ -1,49 +1,54 @@
-<ion-app>
-  <ion-header [translucent]="true">
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>Login</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-header collapse="">
     <ion-toolbar>
-      <ion-buttons slot="start">
-        <ion-menu-button></ion-menu-button>
-      </ion-buttons>
-      <ion-title>Cadastro de Usuarios</ion-title>
+      <ion-title size="large"></ion-title>
     </ion-toolbar>
   </ion-header>
-  <ion-content class="ion-padding">
-
-    <div class="background" id="background">
-      <div class="formulario" id="formulario">
-        <form [formGroup]="registrationForm" (ngSubmit)="onSubmit()">
-          <ion-item>
-            <ion-input label="login" labelPlacement="floating" placeholder="Insira o seu usuário" formControlName="login"></ion-input>
-          </ion-item>
-          <ion-text color="danger" *ngIf="registrationForm.get('login')?.touched && registrationForm.get('login')?.invalid">
-            login é obrigatório.
-          </ion-text>
-
-          <ion-item>
-            <ion-input label="e-mail" labelPlacement="floating" placeholder="Insira o seu e-mail" type = "email" formControlName="email"></ion-input>
-          </ion-item>
-          <ion-text color="danger" *ngIf="registrationForm.get('email')?.touched && registrationForm.get('email')?.invalid">
-            Insira um email válido.
-          </ion-text>
-
-
-          <ion-item>
-            <ion-input label="senha" labelPlacement="floating" placeholder="Insira a sua senha" type="password" formControlName="senha"></ion-input>
-          </ion-item>
-            <ion-text color="danger" *ngIf="registrationForm.get('senha')?.touched && registrationForm.get('senha')?.invalid">
-          </ion-text>
-
-          <ion-item>
-            <ion-input label="nome" labelPlacement="floating" placeholder="Insira o seu nome" type="text" formControlName="nome"></ion-input>
-          </ion-item>
-            <ion-text color="danger" *ngIf="registrationForm.get('nome')?.touched && registrationForm.get('nome')?.invalid">
-          </ion-text>
-          
-          
-
-        <ion-button expand="block" type="submit" [disabled]="registrationForm.invalid">Cadastrar</ion-button>
-      </form>
+  
+  <div class="login-container">  
+    <form [formGroup]="registrationForm" (ngSubmit)="onSubmit()">
+      <div class="form-group">
+        <input type="text" formControlName="nome" name="nome" placeholder="Preencha seu Nome" label="Nome" required />
+        <ion-text color="danger" *ngIf="registrationForm.get('nome')?.touched && registrationForm.get('nome')?.invalid">
+          Preencha com um nome valido
+        </ion-text>
       </div>
-    </div>
-  </ion-content>
-</ion-app>
+      <div class="form-group">
+        <input type="text" formControlName="email" name="email" placeholder="E-mail" label="Email" required />
+        <ion-text color="danger" *ngIf="registrationForm.get('email')?.touched && registrationForm.get('email')?.invalid">
+          Preencha com um e-mail valido
+        </ion-text>
+      </div>
+      <div class="form-group">
+        <input type="text" formControlName="login" name="login" placeholder="Nome de login" label="Login" required />
+      <ion-text color="danger" *ngIf="registrationForm.get('login')?.touched && registrationForm.get('login')?.invalid">
+        Preencha com um usuario valido
+      </ion-text>
+      </div>  
+      <div class="form-group">
+        <input type="password" formControlName="senha" name="senha" placeholder="Senha" label="Senha" (ngModelChange)="verificarSenhas()" required/>
+        <ion-text color="danger" *ngIf="registrationForm.get('senha')?.touched && registrationForm.get('senha')?.invalid">
+          Preencha com uma senha valida
+        </ion-text>
+      </div>
+      <div class="form-group">
+        <input type="password" formControlName="senha2" name="senha" placeholder="Confirme sua senha" label="Confirme sua Senha" (ngModelChange)="verificarSenhas()" required />
+        <ion-text color="danger" *ngIf="(registrationForm.get('senha2')?.touched && registrationForm.get('senha2')?.invalid) || (registrationForm.get('senha')?.value !== registrationForm.get('senha2')?.value)">
+          As senhas não combinam
+        </ion-text>
+      </div>
+  
+      <ion-button type="submit" class="btn" expand="block" [disabled]="registrationForm.invalid || !senhasIguais">Cadastrar</ion-button>
+  
+      <div class="social-login">
+        <ion-button type="button" class="btn" (click)="Login()">Já possui Login?</ion-button>
+      </div>
+    </form>
+  </div>
+</ion-content>

@@ -1,0 +1,72 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Lista completa</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<div class="teste" id="container">
+  <ion-item-divider>
+    <div class="content-container">
+      <div class="top-bar">
+        <!-- Logo -->
+        <div class="img">
+          <img src="assets/Image/Logo.png" alt="Logo" />
+        </div>
+
+        <!-- Nome de usuário e status -->
+        <ion-title>
+          <div class="user-info">
+            <span class="user-name">Usuário</span>
+            <ion-badge color="success" class="status-badge">
+              Lista disponível
+            </ion-badge>
+          </div>
+        </ion-title>
+
+        <!-- Avatar do usuário -->
+        <ion-avatar class="profile-avatar">
+          <img src="assets/icon/favicon.png" alt="Usuário" />
+        </ion-avatar>
+      </div>
+
+      <!-- Botões na parte inferior -->
+      <div class="botoes">
+        <ion-button fill="outline" size="default"> + </ion-button>
+        <p>Compras de Maio</p>
+        <ion-button id="btn">Adicionar Produtos</ion-button>
+      </div>
+    </div>
+  </ion-item-divider>
+</div>
+
+<ion-content class="teste">
+  <ion-list>
+    <div *ngFor="let item of itemList; let i = index">
+      <ion-item>
+        <ion-checkbox slot="start" [(ngModel)]="item.selected"></ion-checkbox>
+        <ion-label> {{ item.name }} </ion-label>
+        <ion-button fill="outline" color="medium" (click)="decrement(i)" [disabled]="item.quantity <= 1" > - </ion-button>
+        <span class="quantity">{{ item.quantity }}</span>
+        <ion-button fill="outline" color="medium" (click)="increment(i)"> + </ion-button>
+        <ion-button color="danger" (click)="removeItem(i)"> Remover </ion-button>
+      </ion-item>
+    </div>
+  </ion-list>
+
+  <ion-footer>
+    <ion-toolbar>
+      <ion-grid>
+        <ion-row>
+          <ion-col size="6">
+            <ion-button expand="block" (click)="clearList()">Limpar</ion-button>
+          </ion-col>
+          <ion-col size="6">
+            <ion-button expand="block" (click)="saveStock()">Salvar no estoque</ion-button>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </ion-toolbar>
+  </ion-footer>
+  
+  
+</ion-content>

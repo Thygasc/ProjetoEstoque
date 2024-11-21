@@ -1,8 +1,6 @@
-<ion-header>
+<ion-header [translucent]="true">
   <ion-toolbar>
-    <ion-buttons slot="start">
-      <ion-menu-button></ion-menu-button>
-    </ion-buttons>
+    <ion-title>TelaInicial</ion-title>
   </ion-toolbar>
 </ion-header>
 
@@ -52,15 +50,14 @@
 <ion-content>
   <div class="scrollable-list">
     <ion-list>
-      <label>Lista de estoques</label>
-      <ion-item *ngFor="let produto of produtos;">
+      <ion-item *ngFor="let item of items; let i = index">
         <ion-label>
-          <h2>{{ produto. prod_nome }} {{ produto.prod_qtd }} </h2>
+          <h2>{{ i + 1 }}. {{ item.name }} - {{ item.weight }}</h2>
         </ion-label>
-        <ion-button fill="clear" color="primary" (click)="editItem(produto.prod_id)">
+        <ion-button fill="clear" color="primary" (click)="editItem(i)">
           <ion-icon slot="icon-only" name="create-outline"></ion-icon>
         </ion-button>
-        <ion-button fill="clear" color="danger" (click)="deleteItem(produto.prod_id)">
+        <ion-button fill="clear" color="danger" (click)="deleteItem(i)">
           <ion-icon slot="icon-only" name="trash-outline"></ion-icon>
         </ion-button>
       </ion-item>
@@ -69,17 +66,17 @@
   <ion-button expand="block" (click)="loadMore()">Ver mais</ion-button>
 
   <br /><br />
+
   <div class="scrollable-list">
     <ion-list>
-      <label>Lista de produtos</label>
-      <ion-item *ngFor="let produto of produtos;">
+      <ion-item *ngFor="let item of items; let i = index">
         <ion-label>
-          <h2>{{ produto. prod_nome }} {{ produto.prod_qtd }} </h2>
+          <h2>{{ i + 1 }}. {{ item.name }} - {{ item.weight }}</h2>
         </ion-label>
-        <ion-button fill="clear" color="primary" (click)="editItem(produto.prod_id)">
+        <ion-button fill="clear" color="primary" (click)="editItem(i)">
           <ion-icon slot="icon-only" name="create-outline"></ion-icon>
         </ion-button>
-        <ion-button fill="clear" color="danger" (click)="deleteItem(produto.prod_id)">
+        <ion-button fill="clear" color="danger" (click)="deleteItem(i)">
           <ion-icon slot="icon-only" name="trash-outline"></ion-icon>
         </ion-button>
       </ion-item>

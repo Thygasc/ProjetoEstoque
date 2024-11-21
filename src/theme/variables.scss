@@ -1,2 +1,10 @@
 // For information on how to create your own theme, please see:
 // http://ionicframework.com/docs/theming/
+
+:root { 
+    --ion-background-color: #ffffff; // Branco para toda a aplicação 
+    --ion-toolbar-background: #ffffff; // Branco para a barra de cabeçalho 
+    --ion-header: #ffffff;
+    --ion-toolbar-color: #ffffff; // Cor do texto na barra de cabeçalho
+}
+

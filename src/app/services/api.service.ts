@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import {Observable } from 'rxjs';
 
 import {jwtDecode} from 'jwt-decode';
@@ -8,19 +8,20 @@ import {jwtDecode} from 'jwt-decode';
     providedIn:'root',
 })
 export class ApiService {
+
     private  baseUrl = 'http://localhost:3000'; // URL DO NODEJS SERVER criado no server.js
 
     constructor(private http: HttpClient){}
 
     // Função para cadastrar um novo usuario
     registerUser(userData:any):Observable<any>{
+        console.log(userData,'ApiService')
         return this.http.post(`${this.baseUrl}/cadastrarUsuario`,userData);
     }
 
 
     // Função para validar se ja existe um usuario com este login
     validaUsuario(dados:string){
-        
         return this.http.get(`${this.baseUrl}/validarUsuarioCadastrados`,{params:{usu_login: dados}});
     };
 
@@ -44,12 +45,31 @@ export class ApiService {
     getUserIdFromToken(): string | null{
         const token = localStorage.getItem('token');
             if(token){
+                console.log('token',token)
                 const decodedToken: any = jwtDecode(token);
+                console.log('decoded token',decodedToken)
                 return decodedToken.id;
             }
-            return null
+            return null;
         }
-}
+    
+    //Função para consultar os produtos cadastrados
+    getProdutosCadastro(): Observable<any>{
+        const estoq = localStorage.getItem('estoque');
+        const usu_id = this.getUserIdFromToken();
+        let params = new HttpParams ()
+        if (estoq){
+            params = params.set('id_estoq',estoq);
+        }
+        if (usu_id){
+            params= params.set('id_usuario',usu_id);
+        }
+        console.log('Parâmetros:', params.toString()); // Adicionando para verificar os parâmetros como string
+        return this.http.get(`${this.baseUrl}/Produtos`,{params});
+        
+    }
+
+    }
 
 
 

@@ -191,27 +191,18 @@ img {
   color: rgb(0, 0, 0);
 }
 
+
+
 ion-button {
   --background: #47026c;
   --background-hover: #7f4dcf;
-  --color: white;
+  --color: #fff;
   --border-radius: 10%;
   --border-style: solid;
   --border-width: 1px;
   --ripple-color: rgb(255, 0, 136);
   --padding-top: 10px;
   --padding-bottom: 10px;
-}
-
-.scrollable-list {
-  height: 200px; /* Altura máxima da lista */
-  overflow-y: auto; /* Habilita a barra de rolagem vertical */
-  border: 1px solid #ccc; /* Borda leve */
-  border-radius: 8px; /* Arredonda as bordas */
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Suaviza a borda com uma sombra leve */
-  margin-bottom: 20px; /* Espaçamento inferior entre listas e botões */
-  padding: 10px; /* Espaço interno da lista */
-  background-color: #fff; /* Fundo branco para o container da lista */
 }
 
 ion-item {
@@ -231,6 +222,7 @@ ion-button {
   --height: 24px;
   --min-width: 24px;
   --min-height: 24px;
+  --color: #fff;
 }
 
 ion-button ion-icon {
@@ -243,8 +235,29 @@ h2 {
   margin: 0;
 }
 
+ion-footer {
+  background-color: #ffffff; /* Roxo */
+  color: white;
+  padding: 0; /* Remove padding extra */
+}
 
-ion-header{
-  --background: #ffffff;
-  color:#000000;
+ion-footer ion-toolbar {
+  --background: #ffffff; /* Certifica-se de que o fundo do toolbar está roxo */
+}
+
+ion-footer ion-grid {
+  background-color: #fff; /* Fundo branco para os espaços */
+  padding: 0;
+}
+
+ion-footer ion-col {
+  padding: 0; /* Remove espaçamento extra */
+}
+
+ion-footer ion-button {
+  --background: #6a0dad; /* Botões com fundo branco */
+  --color: ##fff; /* Texto dos botões em roxo */
+  font-weight: bold;
+  border-radius: 0; /* Remove bordas arredondadas */
+  height: 100%; /* Garante que os botões ocupem todo o espaço */
 }

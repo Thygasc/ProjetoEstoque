@@ -1,33 +1,26 @@
 import { Component, OnInit } from '@angular/core';
-import { ApiService } from '../services/api.service';
 
 @Component({
-  selector: 'app-home',
-  templateUrl: 'home.page.html',
-  styleUrls: ['home.page.scss'],
+  selector: 'app-tela-inicial',
+  templateUrl: './tela-inicial.page.html',
+  styleUrls: ['./tela-inicial.page.scss'],
 })
-export class HomePage  implements OnInit{
-  produtos: any[] = [];
-  
-  constructor(private apiService: ApiService) {}
+export class TelaInicialPage implements OnInit {
+
+  constructor() { }
 
   ngOnInit() {
-    this.getProdutos();    
   }
 
-  getProdutos(){
-    this.apiService.getProdutosCadastro().subscribe(
-      (data:any[]) =>{
-    this.produtos = data;
-    },
-    (error)=>{
-      console.error("Erro ao buscar produtos",error);
-
-    }
-  );
-  }
-
-  items = this.apiService.getProdutosCadastro();
+  items = [
+    { name: 'Arroz Bernardo', weight: '1kg' },
+    { name: 'Arroz Bernardo', weight: '1kg' },
+    { name: 'Arroz Bernardo', weight: '1kg' },
+    { name: 'Arroz Bernardo', weight: '1kg' },
+    { name: 'Arroz Bernardo', weight: '1kg' },
+    { name: 'Arroz Bernardo', weight: '1kg' },
+    { name: 'Arroz Bernardo', weight: '1kg' }
+  ];
 
   editItem(index: number) {
     console.log('Edit item', index);
@@ -75,5 +68,3 @@ export class HomePage  implements OnInit{
 //     // Lógica para carregar mais itens
 //   }
 // }
-
-
