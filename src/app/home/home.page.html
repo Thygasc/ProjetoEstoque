@@ -25,7 +25,7 @@
           <!-- Nome de usuário e status -->
           <ion-title>
             <div class="user-info">
-              <span class="user-name">Usuário</span>
+              <span class="user-name"> {{ usuario }} </span>
               <ion-badge color="success" class="status-badge">
                 Lista disponível
               </ion-badge>
@@ -53,14 +53,14 @@
   <div class="scrollable-list">
     <ion-list>
       <label>Lista de estoques</label>
-      <ion-item *ngFor="let produto of produtos;">
+      <ion-item *ngFor="let estoque of estoques;">
         <ion-label>
-          <h2>{{ produto. prod_nome }} {{ produto.prod_qtd }} </h2>
+          <h2>{{ estoque.est_desc }} {{ estoque.usu_nome }} </h2>
         </ion-label>
-        <ion-button fill="clear" color="primary" (click)="editItem(produto.prod_id)">
+        <ion-button fill="clear" color="primary" (click)="editItem(estoque.est_id)">
           <ion-icon slot="icon-only" name="create-outline"></ion-icon>
         </ion-button>
-        <ion-button fill="clear" color="danger" (click)="deleteItem(produto.prod_id)">
+        <ion-button fill="clear" color="danger" (click)="deleteItem(estoque.est_id)">
           <ion-icon slot="icon-only" name="trash-outline"></ion-icon>
         </ion-button>
       </ion-item>

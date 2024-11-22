@@ -8,13 +8,20 @@ import { ApiService } from '../services/api.service';
 })
 export class HomePage  implements OnInit{
   produtos: any[] = [];
-  
+  estoques: any[] = [];
+  usuario:string | null = '';
   constructor(private apiService: ApiService) {}
 
   ngOnInit() {
-    this.getProdutos();    
+    this.getEstoques(); 
+    this.getProdutos();   
+    this.getUsuario();
   }
 
+  getUsuario (){
+    this.usuario = localStorage.getItem('nome');
+    console.log(this.usuario,'usuario teste');
+  }
   getProdutos(){
     this.apiService.getProdutosCadastro().subscribe(
       (data:any[]) =>{
@@ -27,7 +34,17 @@ export class HomePage  implements OnInit{
   );
   }
 
-  items = this.apiService.getProdutosCadastro();
+  getEstoques(){
+    this.apiService.getEstoquesCadastrados().subscribe(
+      (estoq:any[]) => {
+        this.estoques = estoq;
+        console.log("data",estoq)
+      },
+      (error)=>{
+        console.error("Erro ao buscar estoques",error);
+      }
+    )
+  }
 
   editItem(index: number) {
     console.log('Edit item', index);

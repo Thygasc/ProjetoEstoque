@@ -1,31 +1,42 @@
-.login-form {
-    background-color: white;
-    border: 2px solid #f7d549; /* Borda amarela */
-    border-radius: 10px;
-    padding: 30px;
-    width: 350px;
-    text-align: center;
-  }
-  
-  /* Estilos dos Labels */
-  .login-form label {
-    font-size: 16px;
-    color: #800080; /* Cor roxa para os labels */
-    display: block;
-    text-align: left;
-    margin-bottom: 5px;
-    font-weight: bold;
-  }
-  
-  /* Estilos dos Inputs */
-  .form-group {
-    margin-bottom: 20px;
-  }
+/* Estilos Globais */
 
+body {
+  font-family: Arial, sans-serif;
+  background-color: #ffffff; /* Fundo branco */
+  margin: 0;
+  // display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Contêiner de Login */
+.login-container {
+  background-color: white;
+  border: 2px solid #f7d549; /* Borda amarela */
+  border-radius: 10px;
+  padding: 30px;
+  text-align: center;
+}
+
+/* Estilos dos Labels */
+.login-container label {
+  font-size: 16px;
+  color: #800080; /* Cor roxa para os labels */
+  display: block;
+  text-align: left;
+  margin-bottom: 5px;
+  font-weight: bold;
+}
+
+/* Estilos dos Inputs */
+.form-group {
+  margin-bottom: 20px;
+  width: auto;
+}
 
 input[type="text"],
 input[type="password"] {
-  width: 100%;
+  width: 50%;
   padding: 10px;
   border: 2px solid #f7d549; /* Borda amarela */
   border-radius: 10px;
@@ -38,7 +49,6 @@ input::placeholder {
   color: #a020f0; /* Cor do placeholder roxa */
 }
 
-
 input[type="text"]:focus,
 input[type="password"]:focus {
   outline: none;
@@ -46,20 +56,24 @@ input[type="password"]:focus {
 }
 
 /* Botão de Enviar */
-button.btn {
+ion-button.btn {
+  --ion-color-primary: #800080; /* Cor primária */ 
+  --ion-color-primary-contrast: white; /* Contraste primário */ 
+
   background-color: #800080;
   color: white;
   padding: 10px;
   border: none;
   border-radius: 10px;
   cursor: pointer;
-  width: 100%;
+  width: 50%;
   font-size: 16px;
 }
 
-button.btn:hover {
+ion-button.btn:hover {
   background-color: #5a005a;
 }
+
 
 /* Link de Esqueci a Senha */
 .forgot-password {
@@ -78,8 +92,8 @@ button.btn:hover {
   margin-top: 20px;
 }
 
-button.btn-google,
-button.btn-facebook {
+ion-button.btn-google,
+ion-button.btn-facebook {
   width: 100%;
   padding: 10px;
   border: 2px solid #f7d549; /* Borda amarela */
@@ -91,25 +105,25 @@ button.btn-facebook {
   align-items: center;
 }
 
-button.btn-google {
+ion-button.btn-google {
   background-color: #ffffff;
   color: #333;
 }
 
-button.btn-facebook {
+ion-button.btn-facebook {
   background-color: #3b5998;
   color: white;
 }
 
-button.btn-google:hover {
+ion-button.btn-google:hover {
   background-color: #f4f4f4;
 }
 
-button.btn-facebook:hover {
+ion-button.btn-facebook:hover {
   background-color: #2d4373;
 }
 
-button.btn-google img,
-button.btn-facebook img {
+ion-button.btn-google img,
+ion-button.btn-facebook img {
   margin-right: 10px;
 }

@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder,FormGroup, Validators } from '@angular/forms';
+import { response } from 'express';
 import { ApiService } from 'src/app/services/api.service';
 
 @Component({
@@ -19,8 +20,16 @@ export class CadastroEstoquePage implements OnInit {
   onSubmit(){
     if (this.CadastroEstoqueForm.valid){
       const descricao = this.CadastroEstoqueForm.get('descricao')?.value;
+      
+      this.apiService.registerEstoque(this.CadastroEstoqueForm.value).subscribe(
+        (response) =>{
+          console.log(response,'reposta no submit');
+        },
+        (error) =>{
+          console.error("Erro ao cadastrar o estoque",error);
+        }
 
-      this.apiService.validaEstoque(descricao)
+      );
     }
   }
 

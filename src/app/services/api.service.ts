@@ -19,6 +19,16 @@ export class ApiService {
         return this.http.post(`${this.baseUrl}/cadastrarUsuario`,userData);
     }
 
+    // Função para cadastrar um novo estoque
+    registerEstoque(userData:any):Observable<any>{
+        console.log(userData,'Api Service register estoque');
+        return this.http.post(`${this.baseUrl}/CadastraEstoque`,userData);
+    }
+
+    // Função para cadastrar um novo produto
+    registerProduto(userData:any):Observable<any>{
+        return this.http.post(`${this.baseUrl}/CadastroProduto`,userData);
+    }
 
     // Função para validar se ja existe um usuario com este login
     validaUsuario(dados:string){
@@ -27,7 +37,8 @@ export class ApiService {
 
     //Função para cadastrar um novo estoque
     registraEstoque(dados:string):Observable<any>{
-        return this.http.post(`${this.baseUrl}/cadastrarEstoque`,dados);
+        const usu_id = this.getUserIdFromToken();
+        return this.http.post(`${this.baseUrl}/cadastrarEstoque`,{dados,usu_id});
     }
 
     // Função para validar se o usuario ja possui um estoque com este nome
@@ -67,6 +78,19 @@ export class ApiService {
         console.log('Parâmetros:', params.toString()); // Adicionando para verificar os parâmetros como string
         return this.http.get(`${this.baseUrl}/Produtos`,{params});
         
+    }
+
+
+    //Função para consultar os estoques cadastrados
+    getEstoquesCadastrados():Observable<any>{
+        const usu_id = this.getUserIdFromToken();
+        console.log('usu_id',usu_id)
+        let params = new HttpParams()
+        if(usu_id){
+            params=params.set('id_usuario',usu_id);
+        }
+        console.log('Parametros estoque:',params.toString());
+        return this.http.get(`${this.baseUrl}/Estoques`,{params});
     }
 
     }

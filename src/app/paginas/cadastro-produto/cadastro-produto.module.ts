@@ -3,12 +3,11 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
 
-
 import { IonicModule } from '@ionic/angular';
 
-import { CadastroEstoquePageRoutingModule } from './cadastro-estoque-routing.module';
+import { CadastroProdutoPageRoutingModule } from './cadastro-produto-routing.module';
 
-import { CadastroEstoquePage } from './cadastro-estoque.page';
+import { CadastroProdutoPage } from './cadastro-produto.page';
 
 @NgModule({
   imports: [
@@ -16,8 +15,8 @@ import { CadastroEstoquePage } from './cadastro-estoque.page';
     FormsModule,
     IonicModule,
     ReactiveFormsModule,
-    CadastroEstoquePageRoutingModule
+    CadastroProdutoPageRoutingModule
   ],
-  declarations: [CadastroEstoquePage]
+  declarations: [CadastroProdutoPage]
 })
-export class CadastroEstoquePageModule {}
+export class CadastroProdutoPageModule {}

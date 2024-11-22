@@ -20,6 +20,10 @@ export class LoginPage implements OnInit {
     });
    }
 
+   forgotPassword(){
+    this.router.navigate(['/RecuperarSenha']);
+   }
+
    onSubmit(){
     if(this.loginForms.valid){
       const login = this.loginForms.get('login')?.value;
@@ -30,7 +34,8 @@ export class LoginPage implements OnInit {
           console.log(response);
           if(response.token) {
             localStorage.setItem('token',response.token);
-            localStorage.setItem('estoque','1');
+            localStorage.setItem('nome',response.name);
+            localStorage.setItem('estoque',response.est_padrao);
             alert('Login com Sucesso');
             this.router.navigate(['/home']);
 

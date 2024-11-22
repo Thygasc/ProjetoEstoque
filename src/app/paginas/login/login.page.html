@@ -1,32 +1,26 @@
-<ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title>login</ion-title>
-    <ion-buttons slot="start">
-    </ion-buttons>
-  </ion-toolbar>
-</ion-header>
-
  <ion-content [fullscreen]="true">
-<div class="backgroud" id="backgroud">
-  <div class="loginForm" id="loginForm">
+  <div class="login-container">  
     <form [formGroup]="loginForms" (ngSubmit)="onSubmit()">
-      <ion-item>
-        <ion-input label="Login" labelPlacement="floating" placeholder="Insira o seu usuário" formControlName="login"></ion-input>
-      </ion-item>
+      <div class="form-group">
+        <input type="text" formControlName="login" name="login" placeholder="Nome de login" label="Login" required />
       <ion-text color="danger" *ngIf="loginForms.get('login')?.touched && loginForms.get('login')?.invalid">
-        login é obrigatório.
+        Preencha com um usuario valido
       </ion-text>
-      <ion-item>
-        <ion-input required label="Senha" labelPlacement= "floating" placeholder="Insira a sua senha" formControlName="senha" type="password"></ion-input>
-      </ion-item>
-      <ion-text color="danger" *ngIf="loginForms.get('senha')?.touched && loginForms.get('senha')?.invalid">
-        Senha obrigatoria
-      </ion-text>
+      </div>  
+      <div class="form-group">
+        <input type="password" formControlName="senha" name="senha" placeholder="Senha" label="Senha" required/>
+        <ion-text color="danger" *ngIf="loginForms.get('senha')?.touched && loginForms.get('senha')?.invalid">
+          Preencha com uma senha valida
+        </ion-text>
+      </div>
       <br>
-      <ion-button block color="primary" type="submit" [disabled]="loginForms.invalid">
+      <ion-button block color="primary" class="btn" type="submit" [disabled]="loginForms.invalid">
         Login
       </ion-button>
+
+      <div class="social-login">
+        <ion-button type="button" class="btn" (click)="forgotPassword()">Esqueci a minha senha</ion-button>
+      </div>
     </form>
   </div>
-</div>
 </ion-content>

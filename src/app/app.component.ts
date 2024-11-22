@@ -20,4 +20,12 @@ export class AppComponent {
     this.router.navigate(['/home']);
   }
 
+  CriarEstoque(){
+    this.router.navigate(['/cadastro-estoque']);
+  }
+
+  CriarProduto(){
+    this.router.navigate(['/cadastro-produto'])
+  }
+
 }

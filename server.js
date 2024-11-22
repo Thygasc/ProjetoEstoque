@@ -48,13 +48,15 @@ app.post('/cadastrarUsuario', (req, res) => {
 app.post('/login', (req, res) => {
     const { usu_login, usu_senha } = req.body;
 
-    db.query('SELECT usu_id,usu_login from usuario where usu_login = ? and usu_senha = ?', [usu_login, usu_senha], (err, results) => {
+    db.query('SELECT usu_id,usu_login,usu_nome,usu_est_padrao from usuario where usu_login = ? and usu_senha = ?', [usu_login, usu_senha], (err, results) => {
         if (err) {
             res.status(500).json({ message: 'Erro ao verificar o login' });
         }
         else if (results.length > 0) {
             const token = jwt.sign({ id: results[0].usu_id }, CHAVE_SECRETA, { expiresIn: '1h' });
-            res.status(200).json({ message: 'Login com sucesso', token });
+            const name = results[0].usu_nome;
+            const est_padrao = results[0].usu_est_padrao;
+            res.status(200).json({ message: 'Login com sucesso', token, name, est_padrao  });
         } else {
             res.status(401).json({ message: 'Credenciais inválidas' });
         }
@@ -64,7 +66,7 @@ app.post('/login', (req, res) => {
 // Função para cadastrar o estoque
 // in: nome estoque, id titular
 app.post('/cadastraEstoque', (req, res) => {
-    const { est_desc, est_titular } = req.body;
+    const { est_desc, est_titular } = req.query;
 
     db.query('SELECT * FROM estoque where est_desc = ? AND est_titular = ?', [est_desc, est_titular], (err, results) => {
         if (err) {
@@ -156,7 +158,7 @@ app.post('/CompartilharEstoque', (req, res) => {
 // Função para cadastro de produto
 // in: nome , quantidade ,min, max e id do estoq  
 app.post('/CadastroProduto',(req,resp) =>{
-    const {prod_nome, prod_qtd,prod_min,prod_max,prod_estoq } = req.body;
+    const {prod_nome, prod_qtd,prod_min,prod_max,prod_estoq } = req.query;
 
     db.query("SELECT prod_nome from produto where prod_estoque = ? and prod_nome = ?",[
         prod_estoq,prod_nome
@@ -166,7 +168,7 @@ app.post('/CadastroProduto',(req,resp) =>{
             console.log("Não foi possivel validar o nome do produto no estoque",error);
         }
         else if (resultado.length> 0){
-            resp.status(200).json({message:"O produto cadastrado ja existe para este estoque, você deve adicionar a quantidade ao produto ja existente ou alterar o nome do protudo!"});
+            resp.status(200).json({message:"O produto cadastrado ja existe para este estoque, você deve adicionar a quantidade ao produto ja existente ou alterar o nome do protudo!", bool:false});
             console.log("O produto cadastrado ja existe para este estoque, você deve adicionar a quantidade ao produto ja existente ou alterar o nome do protudo.");
         }
         else if (resultado.length == 0){
@@ -180,7 +182,7 @@ app.post('/CadastroProduto',(req,resp) =>{
                         console.log("Erro ao acadastrar o novo produto!",err);
                     }
                     else if (result){
-                        resp.status(200).json({message:"Novo produto cadastrado com Sucesso!"});
+                        resp.status(200).json({message:"Novo produto cadastrado com Sucesso!",bool:true});
                         console.log("Novo produto cadastrado com Sucesso com valor max!");
                     }
                 }
@@ -248,7 +250,9 @@ app.get('/validarUsuarioCadastrados', (req, res) => {
         }
 
         if (results.length > 0) {
-            res.status(200).json({ message: 'Usuario ja cadastrado', bool: true });
+            const usuario = results[0];
+            res.status(200).json({ message: 'Usuario ja cadastrado', bool: true});
+            
         } else {
             res.status(200).json({ message: 'Usuario não cadastrado', bool: false });
         }
@@ -296,10 +300,10 @@ app.get("/Produtos",(req,res) =>{
 
 // Consultar estoques
 app.get("/Estoques",(req,res) =>{
-    const { id_usuario } = req.body;
+    const { id_usuario } = req.query;
 
 
-    db.query("SELECT e.* FROM estoque e left join filiado f on e.est_id = f.fil_estoq  WHERE f.fil_id_usuario = ?",[
+    db.query("SELECT u.usu_nome,e.* FROM estoque e left join filiado f on e.est_id = f.fil_estoq left join usuario u on f.fil_master = u.usu_id WHERE f.fil_id_usuario = ?",[
         id_usuario
     ],(error,resultado) =>{
         if(error){
