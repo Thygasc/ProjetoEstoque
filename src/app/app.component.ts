@@ -25,7 +25,15 @@ export class AppComponent {
   }
 
   CriarProduto(){
-    this.router.navigate(['/cadastro-produto'])
+    this.router.navigate(['/cadastro-produto']);
+  }
+  
+  ListarProdutos(){
+    this.router.navigate(['/listar-produtos']);
+  }
+
+  ListarEstoques(){
+    this.router.navigate(['/listar-estoques']);
   }
 
 }

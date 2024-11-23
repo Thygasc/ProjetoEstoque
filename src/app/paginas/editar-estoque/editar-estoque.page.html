@@ -47,28 +47,18 @@
 
   <div class="divzona">
   <div class="login-container">  
-    <form [formGroup]="CadastroEstoqueForm" (ngSubmit)="onSubmit()">
+    <form [formGroup]="EditarEstoqueForm" (ngSubmit)="onSubmit()">
       <ion-label class="label">Descrição</ion-label>
       <div class="form-group">
         <input type="text" formControlName="descricao" name="descricao" placeholder="Preencha a descricao do estoque" label="descricao" required />
-        <ion-text color="danger" *ngIf="CadastroEstoqueForm.get('descricao')?.touched && CadastroEstoqueForm.get('descricao')?.invalid">
+        <ion-text color="danger" *ngIf="EditarEstoqueForm.get('descricao')?.touched && EditarEstoqueForm.get('descricao')?.invalid">
           Preencha com uma descricao valida
         </ion-text>
       </div>
 
-      <ion-button type="submit" class="btn" expand="block" [disabled]="CadastroEstoqueForm.invalid">Cadastrar</ion-button>
+      <ion-button type="submit" class="btn" expand="block" [disabled]="EditarEstoqueForm.invalid">Salvar Alteração</ion-button>
     </form>
 
-  </div>
-   <div class="scrollable-list">
-    <ion-list>
-      <label>Lista de estoques</label>
-      <ion-item *ngFor="let estoque of estoques;">
-        <ion-label>
-          <h2>{{ estoque.est_desc }} {{ estoque.usu_nome }} </h2>
-        </ion-label>
-      </ion-item>
-    </ion-list>
   </div>
 </div>
 </ion-content>

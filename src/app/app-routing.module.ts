@@ -31,6 +31,24 @@ const routes: Routes = [
     path: 'cadastro-produto',
     loadChildren: () => import('./paginas/cadastro-produto/cadastro-produto.module').then( m => m.CadastroProdutoPageModule)
   },
+  {
+    path: 'listar-estoques',
+    loadChildren: () => import('./paginas/listar-estoques/listar-estoques.module').then( m => m.ListarEstoquesPageModule)
+  },
+  {
+    path: 'listar-produtos',
+    loadChildren: () => import('./paginas/listar-produtos/listar-produtos.module').then( m => m.ListarProdutosPageModule)
+  },
+  {
+    path: 'editar-estoque',
+    loadChildren: () => import('./paginas/editar-estoque/editar-estoque.module').then( m => m.EditarEstoquePageModule)
+  },
+ { path: 'editar-estoque/:id', loadChildren: () => import('./paginas/editar-estoque/editar-estoque.module').then(m => m.EditarEstoquePageModule)},
+  {
+    path: 'editar-produto',
+    loadChildren: () => import('./paginas/editar-produto/editar-produto.module').then( m => m.EditarProdutoPageModule)
+  },
+
 ];
 
 @NgModule({

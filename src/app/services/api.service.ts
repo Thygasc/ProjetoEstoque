@@ -21,13 +21,25 @@ export class ApiService {
 
     // Função para cadastrar um novo estoque
     registerEstoque(userData:any):Observable<any>{
-        console.log(userData,'Api Service register estoque');
-        return this.http.post(`${this.baseUrl}/CadastraEstoque`,userData);
+        
+        const usu_id = this.getUserIdFromToken();
+        return this.http.post(`${this.baseUrl}/cadastraEstoque`,{
+            est_desc:userData,
+            est_titular:usu_id
+        });
     }
 
     // Função para cadastrar um novo produto
     registerProduto(userData:any):Observable<any>{
-        return this.http.post(`${this.baseUrl}/CadastroProduto`,userData);
+        console.log(userData);
+        const estoq = localStorage.getItem('estoque');
+        return this.http.post(`${this.baseUrl}/CadastroProduto`,{        
+            prod_nome:userData.produto,
+            prod_qtd:userData.quantidade,
+            prod_min:userData.minimo,
+            prod_max:userData.maximo,
+            prod_estoq:estoq
+        });
     }
 
     // Função para validar se ja existe um usuario com este login
@@ -93,7 +105,16 @@ export class ApiService {
         return this.http.get(`${this.baseUrl}/Estoques`,{params});
     }
 
+    delProduto(prod_id:string):Observable<any>{
+        return this.http.delete(`${this.baseUrl}/ExcluirProduto/${prod_id}`);
     }
 
+    delEstoque(prod_id:string):Observable<any>{
+        return this.http.delete(`${this.baseUrl}/ExcluirEstoque/${prod_id}`);
+    }
 
+    atualizarEstoque(id: string, est_desc: string): Observable<any> {
+         return this.http.patch(`${this.baseUrl}/AtualizarEstoque/${id}`,{ est_desc });
 
+    }
+}

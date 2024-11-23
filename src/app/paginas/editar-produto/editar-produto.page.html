@@ -12,12 +12,10 @@
     <ion-item-divider>
       <div class="content-container">
         <div class="top-bar">
-          <!-- Logo -->
           <div class="img">
             <img src="assets/Image/Logo.png" alt="Logo" />
           </div>
 
-          <!-- Nome de usuário e status -->
           <ion-title>
             <div class="user-info">
               <span class="user-name"> {{ usuario }} </span>
@@ -27,13 +25,11 @@
             </div>
           </ion-title>
 
-          <!-- Avatar do usuário -->
           <ion-avatar class="profile-avatar">
             <img src="assets/icon/favicon.png" alt="Usuário" />
           </ion-avatar>
         </div>
 
-        <!-- Botões na parte inferior -->
         <div class="botoes">
           <ion-button fill="outline" size="default"> + </ion-button>
           <p>Compras de Maio</p>
@@ -45,16 +41,16 @@
 
 
   <div class="login-container">  
-    <form [formGroup]="registrationProductForm" (ngSubmit)="onSubmit()">
+    <form [formGroup]="EditarProductForm" (ngSubmit)="onSubmit()">
       <div class="form-group">
         <input type="text" formControlName="produto" name="produto" placeholder="Nome do Produto*" label="produto" required />
-        <ion-text color="danger" *ngIf="registrationProductForm.get('produto')?.touched && registrationProductForm.get('produto')?.invalid " >
+        <ion-text color="danger" *ngIf="EditarProductForm.get('produto')?.touched && EditarProductForm.get('produto')?.invalid " >
           Nome de produto invalido
         </ion-text>
       </div>
       <div class="form-group">
         <input type="text" formControlName="quantidade" name="quantidade" placeholder="Quantidade Atual*" label="quantidade" required />
-        <ion-text color="danger" *ngIf="registrationProductForm.get('quantidade')?.touched && registrationProductForm.get('quantidade')?.invalid">
+        <ion-text color="danger" *ngIf="EditarProductForm.get('quantidade')?.touched && EditarProductForm.get('quantidade')?.invalid">
           Quantidade invalida
         </ion-text>
       </div>
@@ -64,7 +60,7 @@
       <div class="form-group">
         <input type="text" formControlName="maximo" name="maximo" placeholder="Quantidade Maxima" label="maximo" required/>
       </div>  
-      <ion-button type="submit" class="btn" expand="block" [disabled]="registrationProductForm.invalid">Cadastrar</ion-button>
+      <ion-button type="submit" class="btn" expand="block" [disabled]="EditarProductForm.invalid">Cadastrar</ion-button>
   
     </form>
   </div>

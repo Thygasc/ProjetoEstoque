@@ -66,7 +66,10 @@ app.post('/login', (req, res) => {
 // Função para cadastrar o estoque
 // in: nome estoque, id titular
 app.post('/cadastraEstoque', (req, res) => {
-    const { est_desc, est_titular } = req.query;
+
+    const { est_desc, est_titular } = req.body;
+    console.log(est_desc, est_titular, 'req_body', req.body); // Verificar o conteúdo do req.body
+
 
     db.query('SELECT * FROM estoque where est_desc = ? AND est_titular = ?', [est_desc, est_titular], (err, results) => {
         if (err) {
@@ -82,7 +85,7 @@ app.post('/cadastraEstoque', (req, res) => {
         else {
             db.query("INSERT INTO estoque (est_desc,est_criado_em,est_titular) VALUES (?,NOW(),?);", [est_desc, est_titular], (error, resultado) => {
                 if (error) {
-                    res.status(500).json({ message: 'Erro ao inser o estoque!' });
+                    res.status(500).json({ message: 'Erro ao inserir o estoque!' });
                 }
                 else {
                     res.status(200).json({ message: 'Estoque inserido com sucesso' });
@@ -158,8 +161,9 @@ app.post('/CompartilharEstoque', (req, res) => {
 // Função para cadastro de produto
 // in: nome , quantidade ,min, max e id do estoq  
 app.post('/CadastroProduto',(req,resp) =>{
-    const {prod_nome, prod_qtd,prod_min,prod_max,prod_estoq } = req.query;
 
+    const {prod_nome, prod_qtd,prod_min,prod_max,prod_estoq } = req.body;
+    console.log(prod_nome, prod_qtd,prod_min,prod_max,prod_estoq,"req_body",req.body)
     db.query("SELECT prod_nome from produto where prod_estoque = ? and prod_nome = ?",[
         prod_estoq,prod_nome
     ],(error,resultado) => {
@@ -481,18 +485,23 @@ app.patch("/AtualizarEstoque/:id",(req,resp) =>{
     const {id} = req.params;
     const { est_desc } = req.body;
 
+    console.log(id,est_desc);
+
     db.query("UPDATE estoque SET est_desc = ? WHERE est_id = ?",[est_desc,id],(err,result) =>{
         if (err) {
             console.log("Erro ao atualizar o esotque");
-            resp.status(500).json({message:"Erro ao atualizar o estoque!"});
+            resp.status(500).json({message:"Erro ao atualizar o estoque!",err});
+            return;
         }   
         if (result.affectedRows === 0){
             console.log("Não foi encontrado nenhum estoque com este ID");
-            resp.status(404).json({message:"Não foi encontrado nenhum estoque com este ID"});
+            resp.status(404).json({message:"Não foi encontrado nenhum estoque com este ID",err});
+            return;
         }
         else {
             console.log("Foi atualizado um estoque");
-            resp.status(200).json({message:"Foi ataulizado um estoque."});
+            resp.status(200).json({message:"Foi atualizado um estoque."});
+            return;
         }
     });
 });
@@ -566,7 +575,7 @@ app.delete("/ExcluirEstoque/:id",(req,resp) =>{
 
     db.query("DELETE FROM estoque WHERE est_id = ?",[id],(erro,resultado) =>{
         if(erro) {
-            console.log("Erro ao deletar o estoque. O estoque não deve ter produtos vinculados a ele");
+            console.log("Erro ao deletar o estoque. O estoque não deve ter produtos vinculados a ele",erro);
             resp.status(500).json({message:"Erro ao deletar o estoque. O estoque não deve ter produtos vinculados a ele"});
         }
         else if (resultado.affectedRows === 0) {

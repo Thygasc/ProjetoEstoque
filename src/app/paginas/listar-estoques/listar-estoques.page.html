@@ -1,13 +1,12 @@
-<ion-header>
-  <ion-toolbar>
-    <ion-buttons slot="start"> 
-      <ion-menu-button></ion-menu-button>
-    </ion-buttons>
-  </ion-toolbar>
-</ion-header>
-
-<ion-content>
-
+<ion-app>
+<ion-content [fullscreen]="true">
+  <ion-header>
+    <ion-toolbar>
+      <ion-buttons slot="start">
+        <ion-menu-button></ion-menu-button>
+      </ion-buttons>
+    </ion-toolbar>
+  </ion-header>
 
   <div class="teste" id="container">
     <ion-item-divider>
@@ -44,31 +43,25 @@
     </ion-item-divider>
   </div>
 
-
-  <div class="divzona">
-  <div class="login-container">  
-    <form [formGroup]="CadastroEstoqueForm" (ngSubmit)="onSubmit()">
-      <ion-label class="label">Descrição</ion-label>
-      <div class="form-group">
-        <input type="text" formControlName="descricao" name="descricao" placeholder="Preencha a descricao do estoque" label="descricao" required />
-        <ion-text color="danger" *ngIf="CadastroEstoqueForm.get('descricao')?.touched && CadastroEstoqueForm.get('descricao')?.invalid">
-          Preencha com uma descricao valida
-        </ion-text>
-      </div>
-
-      <ion-button type="submit" class="btn" expand="block" [disabled]="CadastroEstoqueForm.invalid">Cadastrar</ion-button>
-    </form>
-
-  </div>
-   <div class="scrollable-list">
+  <div class="scrollable-list">
     <ion-list>
       <label>Lista de estoques</label>
       <ion-item *ngFor="let estoque of estoques;">
         <ion-label>
           <h2>{{ estoque.est_desc }} {{ estoque.usu_nome }} </h2>
         </ion-label>
+        <ion-button fill="solid" color="warning" (click)="utilizarEstoque(estoque.est_id,estoque.est_desc)">
+          Usar
+        </ion-button>
+        <ion-button fill="clear" color="primary" (click)="editItem(estoque.est_id)">
+          <ion-icon slot="icon-only" name="create-outline"></ion-icon>
+        </ion-button>
+        <ion-button fill="clear" color="danger" (click)="presentAlertConfirm(estoque.est_id)">
+          <ion-icon slot="icon-only" name="trash-outline"></ion-icon>
+        </ion-button>
       </ion-item>
     </ion-list>
   </div>
-</div>
+
 </ion-content>
+</ion-app>

@@ -9,7 +9,11 @@ import { ApiService } from 'src/app/services/api.service';
   styleUrls: ['./cadastro-estoque.page.scss'],
 })
 export class CadastroEstoquePage implements OnInit {
-  CadastroEstoqueForm:FormGroup
+  CadastroEstoqueForm:FormGroup;
+  estoques: any[] = [];
+  usuario:string | null = '';
+
+
 
   constructor(private formBuilder:FormBuilder,private apiService:ApiService) {
     this.CadastroEstoqueForm=this.formBuilder.group({
@@ -19,22 +23,43 @@ export class CadastroEstoquePage implements OnInit {
 
   onSubmit(){
     if (this.CadastroEstoqueForm.valid){
-      const descricao = this.CadastroEstoqueForm.get('descricao')?.value;
-      
-      this.apiService.registerEstoque(this.CadastroEstoqueForm.value).subscribe(
+      const descricao = this.CadastroEstoqueForm.get('descricao')?.value;      
+      this.apiService.registerEstoque(descricao).subscribe(
         (response) =>{
           console.log(response,'reposta no submit');
+          alert("Estoque cadastrado com sucesso");
         },
         (error) =>{
+          switch (error.status){
+            case 403:
+              alert("Usuario ja possui um estoque com esta descrição");
+          }
           console.error("Erro ao cadastrar o estoque",error);
         }
-
       );
     }
   }
 
 
   ngOnInit() {
+    this.getEstoques(); 
+
+  }
+
+  getEstoques(){
+    this.apiService.getEstoquesCadastrados().subscribe(
+      (estoq:any[]) => {
+        this.estoques = estoq;
+        console.log("data",estoq)
+      },
+      (error)=>{
+        console.error("Erro ao buscar estoques",error);
+      }
+    )
+  }
+
+  getUsuario (){
+    this.usuario = localStorage.getItem('nome');
   }
 
 }

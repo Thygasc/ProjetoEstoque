@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ApiService } from '../services/api.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-home',
@@ -10,7 +11,7 @@ export class HomePage  implements OnInit{
   produtos: any[] = [];
   estoques: any[] = [];
   usuario:string | null = '';
-  constructor(private apiService: ApiService) {}
+  constructor(private apiService: ApiService,private route:Router) {}
 
   ngOnInit() {
     this.getEstoques(); 
@@ -20,7 +21,6 @@ export class HomePage  implements OnInit{
 
   getUsuario (){
     this.usuario = localStorage.getItem('nome');
-    console.log(this.usuario,'usuario teste');
   }
   getProdutos(){
     this.apiService.getProdutosCadastro().subscribe(

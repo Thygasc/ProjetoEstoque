@@ -1,0 +1,62 @@
+<ion-app>
+  <ion-content [fullscreen]="true">
+    <ion-header>
+      <ion-toolbar>
+        <ion-buttons slot="start">
+          <ion-menu-button></ion-menu-button>
+        </ion-buttons>
+      </ion-toolbar>
+    </ion-header>
+  
+    <div class="teste" id="container">
+      <ion-item-divider>
+        <div class="content-container">
+          <div class="top-bar">
+            <!-- Logo -->
+            <div class="img">
+              <img src="assets/Image/Logo.png" alt="Logo" />
+            </div>
+  
+            <!-- Nome de usuário e status -->
+            <ion-title>
+              <div class="user-info">
+                <span class="user-name"> {{ usuario }} </span>
+                <ion-badge color="success" class="status-badge">
+                  Lista disponível
+                </ion-badge>
+              </div>
+            </ion-title>
+  
+            <!-- Avatar do usuário -->
+            <ion-avatar class="profile-avatar">
+              <img src="assets/icon/usuario.png" alt="Usuário" />
+            </ion-avatar>
+          </div>
+  
+          <!-- Botões na parte inferior -->
+          <div class="botoes">
+            <ion-button id="btn" (click)="AddProduto()">Adicionar Produtos</ion-button>
+          </div>
+        </div>
+      </ion-item-divider>
+    </div>
+  
+    <div class="scrollable-list">
+      <ion-list>
+        <label>Lista de produtos</label>
+        <ion-item *ngFor="let produto of produtos;">
+          <ion-label>
+            <h2>{{ produto. prod_nome }} {{ produto.prod_qtd }} </h2>
+          </ion-label>
+          <ion-button fill="clear" color="primary" (click)="editItem(produto.prod_id)">
+            <ion-icon slot="icon-only" name="create-outline"></ion-icon>
+          </ion-button>
+          <ion-button fill="clear" color="danger" (click)="presentAlertConfirm(produto.prod_id)">
+            <ion-icon slot="icon-only" name="trash-outline"></ion-icon>
+          </ion-button>
+        </ion-item>
+      </ion-list>
+    </div>
+  
+  </ion-content>
+  </ion-app>
