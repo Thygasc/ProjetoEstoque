@@ -21,7 +21,7 @@ export class LoginPage implements OnInit {
    }
 
    forgotPassword(){
-    this.router.navigate(['/RecuperarSenha']);
+    this.router.navigate(['/cadastro-usuarios']);
    }
 
    onSubmit(){

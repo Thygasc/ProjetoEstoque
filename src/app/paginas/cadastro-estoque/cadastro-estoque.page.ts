@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder,FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { response } from 'express';
 import { ApiService } from 'src/app/services/api.service';
 
@@ -15,10 +16,13 @@ export class CadastroEstoquePage implements OnInit {
 
 
 
-  constructor(private formBuilder:FormBuilder,private apiService:ApiService) {
+  constructor(private formBuilder:FormBuilder,private apiService:ApiService, private route:Router) {
     this.CadastroEstoqueForm=this.formBuilder.group({
     descricao:['',[Validators.required]]
       });
+  }
+  AdicionarProduto(){
+    this.route.navigate(['cadastro-produto']);
   }
 
   onSubmit(){
@@ -28,6 +32,7 @@ export class CadastroEstoquePage implements OnInit {
         (response) =>{
           console.log(response,'reposta no submit');
           alert("Estoque cadastrado com sucesso");
+          this.route.navigate(['/listar-estoques']);
         },
         (error) =>{
           switch (error.status){

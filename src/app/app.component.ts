@@ -36,4 +36,13 @@ export class AppComponent {
     this.router.navigate(['/listar-estoques']);
   }
 
+  EditUsuario(){
+    this.router.navigate(['/usuario']);
+  }
+
+  Logout(){ 
+    localStorage.clear();
+    this.router.navigate(['/login']);
+  }
+
 }

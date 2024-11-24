@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ApiService } from 'src/app/services/api.service';
 
 @Component({
@@ -11,11 +11,13 @@ import { ApiService } from 'src/app/services/api.service';
 export class EditarProdutoPage implements OnInit {
   EditarProductForm:FormGroup;
   usuario:string|null = '';
+  prod:any = {};
 
-  constructor(private formBuilder: FormBuilder,private apiService:ApiService, private route: Router) {
+
+  constructor(private formBuilder: FormBuilder,private apiService:ApiService, private route: Router,private router:ActivatedRoute) {
   this.EditarProductForm = this.formBuilder.group({
-  produto: ['',[Validators.required]],
-  quantidade:['',Validators.required],
+  produto: [''],
+  quantidade:[''],
   minimo:[''],
   maximo:[''],
 });
@@ -23,20 +25,26 @@ export class EditarProdutoPage implements OnInit {
 
 ngOnInit() {
   this.getUsuario();
+  const id = this.router.snapshot.paramMap.get('id');
 }
 
+AdicionarProduto(){
+  this.route.navigate(['/cadastro-produto']);
+}
 
 onSubmit(){
-  if(this.EditarProductForm.valid){
-  
-    this.apiService.registerProduto(this.EditarProductForm.value).subscribe(
+  const id = this.router.snapshot.paramMap.get('id');
+
+  if(this.EditarProductForm.valid && id){
+    this.apiService.atualizarProduto(id,this.EditarProductForm.value).subscribe(
       (response) => {
         console.log(response,"Resposta no Submit");
-        alert("Novo produto cadastrado com Sucesso");
+        alert("Produto Atualizado com Sucesso");
+        this.route.navigate(['/listar-produtos']);
       },
       (error) =>{
-        console.error("Erro ao cadastrar o produto:", error);
-        alert("Erro ao cadastrar o novo produto");
+        console.error("Erro ao editar o produto:", error);
+        alert("Erro ao editar o produto");
       }
     );
   

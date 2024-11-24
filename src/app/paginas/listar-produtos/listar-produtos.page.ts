@@ -44,7 +44,8 @@ export class ListarProdutosPage implements OnInit {
 
   editItem(index: string) {
     console.log('Edit item', index);
-    // Lógica para editar o item
+    
+    this.router.navigate([`editar-produto/${index}`]);
   }
 
 

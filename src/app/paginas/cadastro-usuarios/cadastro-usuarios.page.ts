@@ -18,7 +18,7 @@ export class CadastroUsuariosPage implements OnInit {
       senha:['',[Validators.required,Validators.minLength(6)]],
       nome:['',[Validators.required]],
       email:['',[Validators.required,Validators.email]],
-      senha2: ['',[Validators.required]],      
+      senha2: ['',[Validators.required,Validators.minLength(6)]],      
     });
   }
 

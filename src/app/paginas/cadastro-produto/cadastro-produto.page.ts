@@ -26,6 +26,9 @@ ngOnInit() {
   this.getUsuario();
   }
 
+  AdicionarProduto(){
+    this.route.navigate(['/cadastro-produto']);
+  }
 
 onSubmit(){
   if(this.registrationProductForm.valid){

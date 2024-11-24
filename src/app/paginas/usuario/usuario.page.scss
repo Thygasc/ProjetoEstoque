@@ -1,0 +1,128 @@
+/* Estilos Globais */
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #ffffff; /* Fundo branco */
+    margin: 0;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  /* Contêiner de Login */
+  .login-container {
+    background-color: white;
+    border: 2px solid #f7d549; /* Borda amarela */
+    border-radius: 10px;
+    padding: 30px;
+    width: 350px;
+    text-align: center;
+  }
+  
+  /* Estilos dos Labels */
+  .login-container label {
+    font-size: 16px;
+    color: #800080; /* Cor roxa para os labels */
+    display: block;
+    text-align: left;
+    margin-bottom: 5px;
+    font-weight: bold;
+  }
+  
+  /* Estilos dos Inputs */
+  .form-group {
+    margin-bottom: 20px;
+  }
+  
+  input[type="text"],
+  input[type="password"] {
+    width: 100%;
+    padding: 10px;
+    border: 2px solid #f7d549; /* Borda amarela */
+    border-radius: 10px;
+    font-size: 16px;
+    background-color: #f7f5ff; /* Fundo claro */
+    color: #333333; /* Cor do texto dentro do input */
+  }
+  
+  input::placeholder {
+    color: #a020f0; /* Cor do placeholder roxa */
+  }
+  
+  input[type="text"]:focus,
+  input[type="password"]:focus {
+    outline: none;
+    border-color: #800080;
+  }
+  
+  /* Botão de Enviar */
+  ion-button.btn {
+    background-color: #800080;
+    color: white;
+    padding: 10px;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    width: 100%;
+    font-size: 16px;
+  }
+  
+  ion-button.btn:hover {
+    background-color: #5a005a;
+  }
+  
+  
+  /* Link de Esqueci a Senha */
+  .forgot-password {
+    display: block;
+    margin-top: 10px;
+    color: #800080;
+    text-decoration: none;
+  }
+  
+  .forgot-password:hover {
+    text-decoration: underline;
+  }
+  
+  /* Estilo dos Botões de Login Social */
+  .social-login {
+    margin-top: 20px;
+  }
+  
+  ion-button.btn-google,
+  ion-button.btn-facebook {
+    width: 100%;
+    padding: 10px;
+    border: 2px solid #f7d549; /* Borda amarela */
+    border-radius: 10px;
+    margin-top: 10px;
+    font-size: 16px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  ion-button.btn-google {
+    background-color: #ffffff;
+    color: #333;
+  }
+  
+  ion-button.btn-facebook {
+    background-color: #3b5998;
+    color: white;
+  }
+  
+  ion-button.btn-google:hover {
+    background-color: #f4f4f4;
+  }
+  
+  ion-button.btn-facebook:hover {
+    background-color: #2d4373;
+  }
+  
+  ion-button.btn-google img,
+  ion-button.btn-facebook img {
+    margin-right: 10px;
+  }
+  

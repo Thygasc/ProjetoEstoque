@@ -8,12 +8,8 @@ const routes: Routes = [
   },
   {
     path: '',
-    redirectTo: 'home',
+    redirectTo: 'login',
     pathMatch: 'full'
-  },
-  {
-    path: 'inicial',
-    loadChildren: () => import('./inicial/inicial.module').then( m => m.InicialPageModule)
   },
   {
     path: 'cadastro-usuarios',
@@ -47,6 +43,11 @@ const routes: Routes = [
   {
     path: 'editar-produto',
     loadChildren: () => import('./paginas/editar-produto/editar-produto.module').then( m => m.EditarProdutoPageModule)
+  },
+  { path: 'editar-produto/:id', loadChildren: () => import('./paginas/editar-produto/editar-produto.module').then(m => m.EditarProdutoPageModule)},
+  {
+    path: 'usuario',
+    loadChildren: () => import('./paginas/usuario/usuario.module').then( m => m.UsuarioPageModule)
   },
 
 ];

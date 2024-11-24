@@ -21,7 +21,7 @@
           <!-- Nome de usuário e status -->
           <ion-title>
             <div class="user-info">
-              <span class="user-name"> {{ usuario }} </span>
+              <span class="user-name"> {{ user }} </span>
               <ion-badge color="success" class="status-badge">
                 Lista disponível
               </ion-badge>
@@ -36,9 +36,7 @@
 
         <!-- Botões na parte inferior -->
         <div class="botoes">
-          <ion-button fill="outline" size="default"> + </ion-button>
-          <p>Compras de Maio</p>
-          <ion-button id="btn">Adicionar Produtos</ion-button>
+          <ion-button id="btn" (click)="AdicionarProduto()">Adicionar Produtos</ion-button>
         </div>
       </div>
     </ion-item-divider>
@@ -58,7 +56,22 @@
 
       <ion-button type="submit" class="btn" expand="block" [disabled]="EditarEstoqueForm.invalid">Salvar Alteração</ion-button>
     </form>
-
+    <div class="scrollable-list">
+      <ion-list>
+        <label>Usuarios com acesso</label>
+        <ion-item *ngFor="let usuario of usuarios;">
+          <ion-label>
+            <h2>{{ usuario.usu_nome }} -- {{usuario.est_desc}} -- {{ usuario.fil_inserted_at }} </h2>
+          </ion-label>
+          <ion-button fill="clear" color="danger" (click)="presentAlertConfirm(usuario.fil_id)">
+            <ion-icon slot="icon-only" name="trash-outline"></ion-icon>
+          </ion-button>
+        </ion-item>
+        <ion-button fill="clear" (click)="AdicionarNovoAcesso()">
+          Adicionar Novo
+        </ion-button>
+      </ion-list>
+    </div>
   </div>
 </div>
 </ion-content>

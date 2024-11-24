@@ -31,9 +31,7 @@
         </div>
 
         <div class="botoes">
-          <ion-button fill="outline" size="default"> + </ion-button>
-          <p>Compras de Maio</p>
-          <ion-button id="btn">Adicionar Produtos</ion-button>
+          <ion-button id="btn" (click)="AdicionarProduto()">Adicionar Produtos</ion-button>
         </div>
       </div>
     </ion-item-divider>
@@ -43,24 +41,18 @@
   <div class="login-container">  
     <form [formGroup]="EditarProductForm" (ngSubmit)="onSubmit()">
       <div class="form-group">
-        <input type="text" formControlName="produto" name="produto" placeholder="Nome do Produto*" label="produto" required />
-        <ion-text color="danger" *ngIf="EditarProductForm.get('produto')?.touched && EditarProductForm.get('produto')?.invalid " >
-          Nome de produto invalido
-        </ion-text>
+        <input type="text" formControlName="produto" name="produto" placeholder="Nome do Produto*" label="produto" />
       </div>
       <div class="form-group">
-        <input type="text" formControlName="quantidade" name="quantidade" placeholder="Quantidade Atual*" label="quantidade" required />
-        <ion-text color="danger" *ngIf="EditarProductForm.get('quantidade')?.touched && EditarProductForm.get('quantidade')?.invalid">
-          Quantidade invalida
-        </ion-text>
+        <input type="text" formControlName="quantidade" name="quantidade" placeholder="Quantidade Atual*" label="quantidade" />
       </div>
       <div class="form-group">
-        <input type="text" formControlName="minimo" name="minimo" placeholder="Quantidade minima" label="minimo" required />
+        <input type="text" formControlName="minimo" name="minimo" placeholder="Quantidade minima" label="minimo"/>
       </div>  
       <div class="form-group">
-        <input type="text" formControlName="maximo" name="maximo" placeholder="Quantidade Maxima" label="maximo" required/>
+        <input type="text" formControlName="maximo" name="maximo" placeholder="Quantidade Maxima" label="maximo"/>
       </div>  
-      <ion-button type="submit" class="btn" expand="block" [disabled]="EditarProductForm.invalid">Cadastrar</ion-button>
+      <ion-button type="submit" class="btn" expand="block" [disabled]="EditarProductForm.invalid">Salvar</ion-button>
   
     </form>
   </div>

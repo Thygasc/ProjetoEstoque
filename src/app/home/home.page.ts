@@ -46,19 +46,16 @@ export class HomePage  implements OnInit{
     )
   }
 
-  editItem(index: number) {
-    console.log('Edit item', index);
-    // Lógica para editar o item
+  AdicionarProduto(){
+    this.route.navigate(['cadastro-produto']);
   }
 
-  deleteItem(index: number) {
-    console.log('Delete item', index);
-    // Lógica para deletar o item
+  loadMoreProdutos() {
+    this.route.navigate(['listar-produtos']);
   }
 
-  loadMore() {
-    console.log('Load more items');
-    // Lógica para carregar mais itens
+  loadMoreEstoques(){
+    this.route.navigate(['listar-estoques']);
   }
 
 }

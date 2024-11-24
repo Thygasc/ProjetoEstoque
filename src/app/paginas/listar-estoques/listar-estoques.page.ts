@@ -36,6 +36,10 @@ export class ListarEstoquesPage implements OnInit {
     this.route.navigate([`/editar-estoque/${index}`]);
   }
 
+  AdicionarProduto(){
+    this.route.navigate(['/cadastro-produto']);
+  }
+
   deleteItem(index: string) {
     console.log('Delete item', index);
     this.apiService.delEstoque(index).subscribe(
@@ -59,6 +63,15 @@ Verifique se possui acesso ou se existe produtos cadastrados neste estoque`
     localStorage.setItem('estoque',index);
     localStorage.setItem('est_desc',nomeEst);
     alert(`Agora você está utilizando o estoque ${nomeEst}.`)
+
+    this.apiService.atualizarEstoquePrincipal(index).subscribe(
+      (response:any) =>{
+        console.log("Atualizado o estoque padrao!",response);
+      },
+      (error) =>{
+        console.log("Erro ao atualizar o estoque padrao",error);
+      }
+    )
 
   }
 

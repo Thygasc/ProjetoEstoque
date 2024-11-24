@@ -1,0 +1,35 @@
+<ion-content [fullscreen]="true">
+  <ion-header>
+    <ion-toolbar>
+      <ion-buttons slot="start">
+        <ion-menu-button></ion-menu-button>
+      </ion-buttons>
+    </ion-toolbar>
+  </ion-header>
+  
+  <div class="login-container">  
+    <form [formGroup]="editarUsuario" (ngSubmit)="onSubmit()">
+      <div class="form-group">
+        <input type="text" formControlName="nome" name="nome" placeholder="Preencha seu Nome" label="Nome" />
+      </div>
+      <div class="form-group">
+        <input type="text" formControlName="email" name="email" placeholder="E-mail" label="Email" />
+      </div>
+      <div class="form-group">
+        <input type="password" formControlName="senha" name="senha" placeholder="Senha" label="Senha" (ngModelChange)="verificarSenhas()"/>
+        <ion-text color="danger" *ngIf="(editarUsuario.get('senha')?.value !== editarUsuario.get('senha2')?.value)">
+          As senhas não combinam
+        </ion-text>
+      </div>
+      <div class="form-group">
+        <input type="password" formControlName="senha2" name="senha" placeholder="Confirme sua senha" label="Confirme sua Senha" (ngModelChange)="verificarSenhas()" required />
+        <ion-text color="danger" *ngIf="(editarUsuario.get('senha')?.value !== editarUsuario.get('senha2')?.value)">
+          As senhas não combinam
+        </ion-text>
+      </div>
+  
+      <ion-button type="submit" class="btn" expand="block">Salvar</ion-button>
+  
+    </form>
+  </div>
+</ion-content>

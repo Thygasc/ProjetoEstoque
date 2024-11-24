@@ -40,9 +40,7 @@
 
         <!-- Botões na parte inferior -->
         <div class="botoes">
-          <ion-button fill="outline" size="default"> + </ion-button>
-          <p>Compras de Maio</p>
-          <ion-button id="btn">Adicionar Produtos</ion-button>
+          <ion-button id="btn" (click)="AdicionarProduto()">Adicionar Produtos</ion-button>
         </div>
       </div>
     </ion-item-divider>
@@ -57,16 +55,10 @@
         <ion-label>
           <h2>{{ estoque.est_desc }} {{ estoque.usu_nome }} </h2>
         </ion-label>
-        <ion-button fill="clear" color="primary" (click)="editItem(estoque.est_id)">
-          <ion-icon slot="icon-only" name="create-outline"></ion-icon>
-        </ion-button>
-        <ion-button fill="clear" color="danger" (click)="deleteItem(estoque.est_id)">
-          <ion-icon slot="icon-only" name="trash-outline"></ion-icon>
-        </ion-button>
       </ion-item>
     </ion-list>
   </div>
-  <ion-button expand="block" (click)="loadMore()">Ver mais</ion-button>
+  <ion-button expand="block" (click)="loadMoreEstoques()">Ver mais</ion-button>
 
   <br /><br />
   <div class="scrollable-list">
@@ -76,15 +68,9 @@
         <ion-label>
           <h2>{{ produto. prod_nome }} {{ produto.prod_qtd }} </h2>
         </ion-label>
-        <ion-button fill="clear" color="primary" (click)="editItem(produto.prod_id)">
-          <ion-icon slot="icon-only" name="create-outline"></ion-icon>
-        </ion-button>
-        <ion-button fill="clear" color="danger" (click)="deleteItem(produto.prod_id)">
-          <ion-icon slot="icon-only" name="trash-outline"></ion-icon>
-        </ion-button>
       </ion-item>
     </ion-list>
   </div>
-  <ion-button expand="block" (click)="loadMore()">Ver mais</ion-button>
+  <ion-button expand="block" (click)="loadMoreProdutos()">Ver mais</ion-button>
 </ion-content>
 

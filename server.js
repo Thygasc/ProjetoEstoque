@@ -66,10 +66,7 @@ app.post('/login', (req, res) => {
 // Função para cadastrar o estoque
 // in: nome estoque, id titular
 app.post('/cadastraEstoque', (req, res) => {
-
     const { est_desc, est_titular } = req.body;
-    console.log(est_desc, est_titular, 'req_body', req.body); // Verificar o conteúdo do req.body
-
 
     db.query('SELECT * FROM estoque where est_desc = ? AND est_titular = ?', [est_desc, est_titular], (err, results) => {
         if (err) {
@@ -103,56 +100,63 @@ app.post('/cadastraEstoque', (req, res) => {
 //recebe o id de quem está acessando ja descriptografado
 
 app.post('/CompartilharEstoque', (req, res) => {
-    const { fil_master, fil_id_usuario, fil_estoq } = req.body;
+    const { fil_nome_usuario, fil_estoq } = req.body;
 
-    db.query('SELECT est_titular FROM estoque where est_id = ?', [
+    db.query('SELECT est_titular FROM estoque where est_id = ?', [ //Consulta para pegar o titular do estoque
         fil_estoq
     ], (err, results) => {
         if (err) {
-            res.status(500).json({ message: "Erro ao verificar o titular do estoque a ser alterado!" });
+            res.status(500).json({ message: "Erro consultar o estoque!" });
             console.log(err);
         }
         else {
-            const estTitular = results[0]?.est_titular;
-        
-        
-            if(estTitular !== fil_master){
-                res.status(200).json({message:"O usuario que está acessando não possui acesso a este estoque"});
-                console.log("O usuario que está acessando não possui acesso a este estoque");
-            }
-
-            else if (estTitular == fil_master){
-                db.query('Select fil_id_usuario from filiado where fil_estoq = ? and fil_master = ? and fil_id_usuario = ?',[
-                    fil_estoq,
-                    fil_master,
-                    fil_id_usuario
+            const fil_master = results[0]?.est_titular; // Pega o ID do titular do estoque
+            console.log("Primeiro select retorna",results)
+            if (fil_nome_usuario && fil_estoq){
+                db.query(`SELECT usu_id FROM usuario u WHERE u.usu_login = ?`,[// Consulta para verificar o id do usuario fornecido
+                    fil_nome_usuario
                 ],(error,reul) =>{
-                    const fil_usuario = reul[0]?.fil_id_usuario;
-
-                    if(error) {
+                    if (error){
                         res.status(500).json({message:"Erro ao consultar o usuario"});
                         console.log("Erro ao consultar o usuario");
                     }
-                    else if(fil_usuario == fil_id_usuario){
-                        res.status(200).json({message:"O usuario ja possui acesso a este estoque"});
-                        console.log('Usuario ja cadastrado',fil_usuario);
-                    }
-                    else{
-                        db.query("INSERT INTO filiado (fil_master,fil_id_usuario,fil_estoq,fil_inserted_at) VALUES (?,?,?,NOW())", [
-                            fil_master,
-                            fil_id_usuario,
-                            fil_estoq
-                        ], (erro, resultado) => {
-                            if(erro){
-                                res.status(500).json({message:"Erro ao cadastrar o novo usuario no estoque!"});
-                                console.log("ERRO AO CADASTRAR O NOVO USUARIO",erro);
+                    else if(reul){
+                    const usu_id = reul[0]?.usu_id; // Pega o ID do usuario pelo login fornecido
+                    
+                    db.query(`SELECT fil_id_usuario FROM filiado where fil_id_usuario = ? and fil_estoq = ?`,[// vERIFICAÇÃO PARA SABER SE ELE JA POSSUI ACESSO
+                        usu_id,
+                        fil_estoq
+                    ], (error,resul) =>{
+                        if (error) {
+                            res.status(500).json({message:"Erro ao consultar o usuario no estoque"});
+                            console.log("Erro ao consultar o usuario no estoque");
+                        }
+                        else if (resul) {
+                                let fil_usuario = resul[0]?.fil_id_usuario;
+
+                            if(fil_usuario == usu_id){
+                                res.status(200).json({message:"O usuario ja possui acesso a este estoque"});
+                                console.log("O usuario ja possui acesso a este estoque",fil_usuario,usu_id);
+                            } 
+                            else{
+                                db.query("INSERT INTO filiado (fil_master,fil_id_usuario,fil_estoq,fil_inserted_at) VALUES (?,?,?,NOW())", [
+                                    fil_master,
+                                    usu_id,
+                                    fil_estoq
+                                ], (erro, resultado) => {
+                                    if(erro){
+                                        res.status(500).json({message:"Erro ao cadastrar o novo usuario no estoque!"});
+                                        console.log("ERRO AO CADASTRAR O NOVO USUARIO",erro);
+                                    }
+                                    else if(resultado.affectedRows>0) {
+                                        res.status(200).json({message:"Estoque compartilhado com sucesso;"});
+                                        console.log("Cadastrado com sucesso",resultado);
+                                    }
+                                });
                             }
-                            else if(resultado.affectedRows>0) {
-                                res.status(200).json({message:"Estoque compartilhado com sucesso;"});
-                                console.log("Cadastrado com sucesso",results);
-                            }
-                        });
-                    }
+                        }
+                    })
+                }  
                 });
         }}
     });
@@ -163,7 +167,7 @@ app.post('/CompartilharEstoque', (req, res) => {
 app.post('/CadastroProduto',(req,resp) =>{
 
     const {prod_nome, prod_qtd,prod_min,prod_max,prod_estoq } = req.body;
-    console.log(prod_nome, prod_qtd,prod_min,prod_max,prod_estoq,"req_body",req.body)
+
     db.query("SELECT prod_nome from produto where prod_estoque = ? and prod_nome = ?",[
         prod_estoq,prod_nome
     ],(error,resultado) => {
@@ -302,6 +306,26 @@ app.get("/Produtos",(req,res) =>{
     });
 });
 
+//Consulta os filiados com acesso ao estoque
+app.get("/Filiados",(req,resp) =>{
+    const { est_id } =req.query;
+
+    db.query("SELECT u.usu_nome,e.est_desc,f.* FROM filiado f left join usuario u ON f.fil_id_usuario = u.usu_id left join estoque e on f.fil_estoq = e.est_id WHERE f.fil_estoq = ?",est_id,(err,result) =>{
+        if(err){
+            console.error("Erro ao consultar os acessos",err);
+            resp.status(500).json({message:"Erro ao consultar os acessos."});
+            return;
+        }
+        if (result){
+            console.log(result);
+            resp.status(200).json({result});
+            return;
+        } 
+    });
+
+});
+
+
 // Consultar estoques
 app.get("/Estoques",(req,res) =>{
     const { id_usuario } = req.query;
@@ -436,6 +460,9 @@ app.patch("/AtualizaProduto/:id",(req,resp) =>{
     const { id } = req.params;
     const { prod_nome, prod_qtd, prod_min, prod_max,usu_id } = req.body;
     
+    console.log("body:",req.body,"params:",req.params);
+
+
     let query = "UPDATE produto SET ";
     let values = [];
 
@@ -447,11 +474,11 @@ app.patch("/AtualizaProduto/:id",(req,resp) =>{
         query +="prod_qtd = ?, ";
         values.push(prod_qtd);
     }
-    if(prod_min){
+    if(prod_min && prod_min !== ''){
         query +="prod_min = ?, ";
         values.push(prod_min);
     }
-    if(prod_max){
+    if(prod_max && prod_max!== ''){
         query +="prod_max = ?, ";
         values.push(prod_max);
     }
@@ -464,16 +491,19 @@ app.patch("/AtualizaProduto/:id",(req,resp) =>{
     // Executa a query do update
     db.query(query,values,(err,results) => {
         if(err){
-            console.log("Erro ao atualizar o produto: ",err);
+            console.log("Erro ao atualizar o produto: ",err,"query:",query);
             resp.status(500).json({message:"Erro ao atualizar o produto."});
+            return;
         }
         if(results.affectedRows === 0){
             console.log("Produto não encontrado");
             resp.status(404).json({message:"Produto não encontrado."});
+            return;
         }
         else {
             console.log("Sucesso ao atualizar o produto",query);
             resp.status(200).json({message:"Produto atualizado com sucesso!"});
+            return;
         }
     });
 
@@ -507,9 +537,8 @@ app.patch("/AtualizarEstoque/:id",(req,resp) =>{
 });
 
 // funciona show
-app.patch("/AtualizaUsuario/:id",(req,resp) =>{
-    const { id } = req.params;
-    const { usu_senha, usu_nome,usu_email } = req.body;
+app.patch("/AtualizaUsuario",(req,resp) =>{
+    const { id,usu_senha, usu_nome,usu_email,est_padrao } = req.body;
 
     let query = "UPDATE usuario SET ";
     let values = [];
@@ -526,20 +555,26 @@ app.patch("/AtualizaUsuario/:id",(req,resp) =>{
         query += "usu_email = ?, ";
         values.push(usu_email);
     }
+    if (est_padrao){
+        query += "usu_est_padrao = ?, ";
+        values.push(est_padrao);
+    }
 
     // Remover a virgula no final
     query = query.slice(0,-2);
-    query += "WHERE usu_id = ?";
+    query += " WHERE usu_id = ?";
     values.push(id);
 
     db.query(query,values,(err,result) =>{
         if (err){
             console.log("Erro ao atualizar o registro");
             resp.status(500).json({message:"Erro ao atualizar o registro"});
+            return;
         }
-        if (result.affectedRows === 0 ){
+        else if (result.affectedRows === 0 ){
             console.log ("Não foi encontrado nenhum registro com este ID");
             resp.status(404).json({message:"Não foi encontrado nenhum registro com este ID"});
+            return;
         }
         else {
             console.log("Foi atualizado o registro referente a este ID");
@@ -591,11 +626,10 @@ app.delete("/ExcluirEstoque/:id",(req,resp) =>{
 
 // Funcionando show
 app.delete("/RemoverAcessoEstoque/:id",(req,resp) =>{
-    const { id } = req.params; // id do estoque
-    const { usu_id} = req.body;
+    const { id } = req.params;
 
-    db.query("DELETE FROM filiado WHERE fil_id_usuario = ? AND fil_estoq = ?", [
-        usu_id,
+    console.log(id);
+    db.query("DELETE FROM filiado WHERE fil_id = ?", [
         id
     ],(err,result) =>{
         if (err){
@@ -604,7 +638,7 @@ app.delete("/RemoverAcessoEstoque/:id",(req,resp) =>{
         }
         if (result.affectedRows === 0){
             console.log("Não foi encontrado nenhum acesso para este usuario neste estoque");
-            resp.status(404).json({message:"Não foi encontrado nenhum acesso para este usuario neste estoque"});
+            resp.status(404).json({message:"Não foi encontrado nenhum acesso para este usuario neste estoque",});
         }
         else {
             console.log("Foi removido com sucesso o acesso deste estoque");

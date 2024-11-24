@@ -29,9 +29,20 @@ export class ApiService {
         });
     }
 
+    //Função para comapartilhar o estoque
+    registerAcessoEstoque(userData:any):Observable<any>{
+        const estoq = localStorage.getItem('estoque');
+        return this.http.post(`${this.baseUrl}/CompartilharEstoque`,{
+            fil_nome_usuario: userData, 
+            fil_estoq: estoq
+        }); 
+    }
+
+
+
+
     // Função para cadastrar um novo produto
     registerProduto(userData:any):Observable<any>{
-        console.log(userData);
         const estoq = localStorage.getItem('estoque');
         return this.http.post(`${this.baseUrl}/CadastroProduto`,{        
             prod_nome:userData.produto,
@@ -93,6 +104,16 @@ export class ApiService {
     }
 
 
+    //Função para consultar os acessos aos estoques
+    getFiliadosEstoque(est_id:string):Observable<any>{
+        let params = new HttpParams();
+        if (est_id){
+            params = params.set("est_id",est_id);
+        }
+        console.log("ApiService",params.toString());
+        return this.http.get(`${this.baseUrl}/Filiados`,{params});
+    }
+
     //Função para consultar os estoques cadastrados
     getEstoquesCadastrados():Observable<any>{
         const usu_id = this.getUserIdFromToken();
@@ -113,8 +134,43 @@ export class ApiService {
         return this.http.delete(`${this.baseUrl}/ExcluirEstoque/${prod_id}`);
     }
 
+    delAcesso(fil_id:string):Observable<any>{
+        console.log("ApiService",fil_id);
+        return this.http.delete(`${this.baseUrl}/RemoverAcessoEstoque/${fil_id}`);
+    }
+
     atualizarEstoque(id: string, est_desc: string): Observable<any> {
          return this.http.patch(`${this.baseUrl}/AtualizarEstoque/${id}`,{ est_desc });
 
+    }
+
+    atualizarProduto(id: string, produto: any): Observable<any> {
+        console.log('Api Service',id,produto);
+        return this.http.patch(`${this.baseUrl}/AtualizaProduto/${id}`, {
+            prod_nome:produto.produto,
+            prod_qtd:produto.quantidade,
+            prod_min:produto.minimo,
+            prod_max:produto.maximo });
+    }
+    
+
+    atualizarUsuario(userData:any):Observable<any>{
+        let usuid = this.getUserIdFromToken();
+        return this.http.patch(`${this.baseUrl}/AtualizaUsuario`,{
+            id:usuid,
+            usu_senha:userData.senha,
+            usu_nome:userData.nome,
+            usu_email:userData.email,
+        })
+    }
+
+    atualizarEstoquePrincipal(userData:any):Observable<any>{
+        const usu_id = this.getUserIdFromToken();
+        console.log("Api Service",userData);
+        return this.http.patch(`${this.baseUrl}/AtualizaUsuario`,{
+            id:usu_id,
+            est_padrao:userData
+        });
+        
     }
 }
